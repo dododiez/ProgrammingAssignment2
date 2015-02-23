@@ -47,10 +47,12 @@ cacheSolve <- function(x, ...)
 
 	if (!is.null(myInverse)) 
 	{
+		# The inverse is already cached, just return it...
 		message("getting cached data")
 		return(myInverse)
 	}
 
+	# The Inverse has not been calculated, Calculate and cache it now
 	data <- x$get()
 	myInverse <- solve(data, ...)
 	x$setInverse(myInverse)
