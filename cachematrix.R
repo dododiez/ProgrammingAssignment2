@@ -11,29 +11,35 @@ makeCacheMatrix <- function(x = matrix())
 	# Define the set matrix function -- Use when you need to change the matrix data
 	set <- function(y) 
 	{
+	     # Replace the matrix with the one given in the input
 		x <<- y
+		
+		# Mark the INVERSE of the matrix a "Not calculated"
 		myInverse <<- NULL
 	}
 
 	# Define the get matrix function --- use when you just want the matrix data
 	get <- function() 
 	{
+	     # Simply return the active matrix
 		x
 	}
 
 	# Set Mean -- Use after you have calculated the mean and you want to cache it
 	setInverse <- function(inverse) 
 	{
+	     # Cache the given inverse
 		myInverse <<- inverse
 	}
 
 	# Get Inverse -- Use when you want to simply get the Inverse to test if it exists or you just want to retrieve it..
 	getInverse <- function() 
 	{
+	     # Return the cached inverse
 		myInverse
 	}
 
-	# Return the special list of useful functions to aid in our cashing
+	# Return the special list of useful functions to aid in our caching
 	list(set = set, get = get, setInverse = setInverse, getInverse = getInverse)
 }
 
@@ -43,8 +49,10 @@ cacheSolve <- function(x, ...)
 {
     ## Return a matrix that is the inverse of 'x'
 
+     # Extract inverse from "cache matrix"
 	myInverse <- x$getInverse()
 
+	# If a valid matrix inverse was obtained, just return it.
 	if (!is.null(myInverse)) 
 	{
 		# The inverse is already cached, just return it...
@@ -52,7 +60,7 @@ cacheSolve <- function(x, ...)
 		return(myInverse)
 	}
 
-	# The Inverse has not been calculated, Calculate and cache it now
+	# The Inverse has not been calculated, Calculate it, cache it, and return it
 	data <- x$get()
 	myInverse <- solve(data, ...)
 	x$setInverse(myInverse)
